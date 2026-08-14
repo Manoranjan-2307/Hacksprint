@@ -141,4 +141,4 @@ The Express backend server runs on `http://localhost:5000`.
 
 ## 📜 License & Acknowledgments
 
-Developed for the **HACKORBIT** hackathon project submission. Built with ❤️ for Bannari Amman Institute of Technology (BIT Sathy).
+Developed for the **HACKORBIT** hackathon project submission.
