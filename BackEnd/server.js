@@ -11,19 +11,26 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
+const dbHost = process.env.DB_HOST || "localhost";
+const dbUser = process.env.DB_USER || "root";
+const dbPassword = process.env.DB_PASSWORD || "manobeast2307";
+const dbName = process.env.DB_NAME || "dc_portal";
+const dbPort = process.env.DB_PORT || 3306;
+
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "manobeast2307",
-  database: "dc_portal",
+  host: dbHost,
+  user: dbUser,
+  password: dbPassword,
+  database: dbName,
+  port: dbPort,
 });
 
 db.connect((err) => {
   if (err) {
-    console.error("Database connection failed:", err);
+    console.error("Database connection warning/failed:", err.message);
     return;
   }
-  console.log("Connected to MySQL database");
+  console.log("Connected to MySQL database successfully");
 });
 
 
@@ -747,7 +754,7 @@ app.post("/api/student-pdfs", uploadPDF.single("pdf"), (req, res) => {
 });
 
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

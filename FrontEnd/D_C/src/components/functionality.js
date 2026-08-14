@@ -3,6 +3,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../pages/firebase";
 
 const USER_STORAGE_KEY = "campusiq_user";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 export const saveUserSession = (user) => {
   localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
@@ -19,7 +20,7 @@ export const getStoredUser = () => {
 
 export const handleRegister = async (name, email, password) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/register", {
+    const response = await axios.post(`${API_BASE_URL}/api/register`, {
       name,
       email,
       password,
@@ -39,7 +40,7 @@ export const handleRegister = async (name, email, password) => {
 
 export const handleLogin = async (email, password, navigate) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/login", {
+    const response = await axios.post(`${API_BASE_URL}/api/login`, {
       username: email,
       password,
     });
