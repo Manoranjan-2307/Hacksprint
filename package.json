@@ -1,0 +1,8 @@
+{
+  "name": "askbit-portal-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd FrontEnd/D_C && npm install && npm run build"
+  }
+}
