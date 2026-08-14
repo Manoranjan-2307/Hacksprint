@@ -13,7 +13,7 @@ app.use(express.json());
 
 const dbHost = process.env.DB_HOST || "localhost";
 const dbUser = process.env.DB_USER || "root";
-const dbPassword = process.env.DB_PASSWORD || "manobeast2307";
+const dbPassword = process.env.DB_PASS || process.env.DB_PASSWORD || "manobeast2307";
 const dbName = process.env.DB_NAME || "dc_portal";
 const dbPort = process.env.DB_PORT || 3306;
 
