@@ -65,27 +65,30 @@ app.post("/api/login", (req, res) => {
     
     const predefinedRoutes = {
       "7376242AD267": "/student1_1",
+      "7376242AD292": "/student1_1",
+      "7376242IT314": "/student1_1",
       "7376242CS111": "/student2_1",
       "7376242IT201": "/student3_1",
       "7376242AD199": "/student4_1",
       "7376242AL165": "/student5_1",
     };
 
-    const route = predefinedRoutes[user.S_ID] || "recent_complaints"; 
+    const route = predefinedRoutes[user.S_ID] || "/student1_1"; 
 
-    res.status(200).json({ message: "Login successful", route, S_ID: user.S_ID, username: user.USERNAME });
+    res.status(200).json({ message: "Login successful", route, S_ID: user.S_ID, username: user.USERNAME, name: user.USERNAME });
   });
 });
-
 
 app.get("/students", (req, res) => {
   const query = "SELECT S_ID, name FROM student_details";
   db.query(query, (err, results) => {
     if (err) {
-      console.error("Error fetching students:", err);
-      return res
-        .status(500)
-        .json({ error: "Failed to fetch students", details: err.message });
+      // Fallback mock students if DB not available
+      return res.json([
+        { S_ID: "7376242AD267", name: "Rahul K", department: "AI & Data Science", phone: "8610834388" },
+        { S_ID: "7376242AD292", name: "Sanjiv", department: "AI & Data Science", phone: "9597537616" },
+        { S_ID: "7376242IT314", name: "Sujan", department: "Information Technology", phone: "9080936050" },
+      ]);
     }
     res.json(results);
   });

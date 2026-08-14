@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const Admin_Sidebar = () => {
+const Sidebar = () => {
   const location = useLocation();
   const collapsed = true;
 
@@ -38,7 +38,7 @@ const Admin_Sidebar = () => {
         >
           <img
             src="https://cdn-icons-png.flaticon.com/512/3413/3413535.png"
-            alt="AskBIT Admin Logo"
+            alt="AskBIT Parent Logo"
             style={{ width: "30px", height: "30px", objectFit: "contain" }}
           />
         </div>
@@ -48,22 +48,19 @@ const Admin_Sidebar = () => {
       <div className="d-flex flex-column align-items-center justify-content-between flex-grow-1 w-100 pb-3" style={{ marginTop: "15px" }}>
         <ul
           className="nav flex-column align-items-center p-0 w-100"
-          style={{ gap: "18px", display: "flex", flexDirection: "column" }}
+          style={{ gap: "20px", display: "flex", flexDirection: "column" }}
         >
-          {/* Dashboard */}
-          <NavItem to="/admin1" icon="bi-speedometer2" label="Dashboard" location={location} />
+          {/* Ask Assistant */}
+          <NavItem to="/parent/dashboard" icon="bi-chat-dots" label="Ask Assistant" location={location} />
 
-          {/* User Management */}
-          <NavItem to="/admin2" icon="bi-people" label="Users" location={location} />
+          {/* Chat History */}
+          <NavItem to="/parent/history" icon="bi-clock-history" label="Chat History" location={location} />
 
-          {/* FAQ Approvals */}
-          <NavItem to="/admin3" icon="bi-patch-check" label="FAQ Approvals" location={location} />
+          {/* My Feedback */}
+          <NavItem to="/parent/feedback" icon="bi-star" label="My Feedback" location={location} />
 
-          {/* Analytics */}
-          <NavItem to="/admin3_1" icon="bi-graph-up-arrow" label="Analytics" location={location} />
-
-          {/* RAG Settings */}
-          <NavItem to="/admin3_2" icon="bi-gear-wide-connected" label="RAG Settings" location={location} />
+          {/* Student & Profile */}
+          <NavItem to="/parent/profile" icon="bi-person-badge" label="Student & Profile" location={location} />
         </ul>
 
         {/* Logout Button */}
@@ -133,8 +130,8 @@ const NavItem = ({ to, icon, label, location, isLogout }) => {
             background: "#1E293B",
             color: "#F8FAFC",
             border: "1px solid rgba(139, 92, 246, 0.3)",
-            width: "135px",
-            minWidth: "135px",
+            width: "140px",
+            minWidth: "140px",
             padding: "8px 12px",
             borderRadius: "10px",
             fontSize: "13px",
@@ -196,4 +193,4 @@ const NavItem = ({ to, icon, label, location, isLogout }) => {
   );
 };
 
-export default Admin_Sidebar;
+export default Sidebar;
