@@ -9,7 +9,7 @@ import AdminDashboard from "./pages/Governance/AdminDashboard";
 import LoginPage from "./pages/LoginPage";
 import { INITIAL_TICKETS } from "./utils/mockData";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://hacksprint-lhv6.onrender.com";
 
 export default function App() {
   const [activeView, setActiveView] = useState("default");
