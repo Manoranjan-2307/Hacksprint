@@ -83,6 +83,31 @@ export default function App() {
     } catch (e) {}
   }, [tickets]);
 
+  const handleNavigate = (view) => {
+    setActiveView(view);
+    let targetRole = currentUser?.role || "Citizen";
+    if (view === "citizen") targetRole = "Citizen";
+    else if (view === "officer") targetRole = "Officer";
+    else if (["heatmap", "hotspots", "accountability", "settings"].includes(view)) targetRole = "Admin";
+
+    if (targetRole !== currentUser?.role) {
+      const updatedUser = {
+        ...currentUser,
+        role: targetRole,
+        name:
+          targetRole === "Citizen"
+            ? "Karthik R. (Citizen)"
+            : targetRole === "Officer"
+            ? "Officer Subramaniam V. (Coimbatore)"
+            : "Coimbatore Municipal Director",
+      };
+      setCurrentUser(updatedUser);
+      try {
+        localStorage.setItem("geovision_user", JSON.stringify(updatedUser));
+      } catch (e) {}
+    }
+  };
+
   const handleUserRoleChange = (newRole, targetView = null) => {
     const updatedUser = {
       ...currentUser,
@@ -210,7 +235,7 @@ export default function App() {
         {/* Sidebar Navigation */}
         <Sidebar
           activeView={activeView}
-          onNavigate={(view) => setActiveView(view)}
+          onNavigate={handleNavigate}
           currentUser={currentUser}
           onUserRoleChange={handleUserRoleChange}
         />

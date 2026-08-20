@@ -169,19 +169,6 @@ export default function Sidebar({
                 (item.id === "officer" && currentUser?.role === "Officer") ||
                 (item.id === "heatmap" && currentUser?.role === "Admin")));
 
-          const handleNavClick = () => {
-            let targetRole = currentUser?.role;
-            if (item.id === "citizen") targetRole = "Citizen";
-            else if (item.id === "officer") targetRole = "Officer";
-            else if (["heatmap", "hotspots", "accountability", "settings"].includes(item.id)) targetRole = "Admin";
-
-            if (targetRole !== currentUser?.role) {
-              if (onUserRoleChange) onUserRoleChange(targetRole, item.id);
-            } else {
-              if (onNavigate) onNavigate(item.id);
-            }
-          };
-
           return (
             <div
               key={item.id}
@@ -190,7 +177,10 @@ export default function Sidebar({
               onMouseLeave={() => setHoveredItem(null)}
             >
               <button
-                onClick={handleNavClick}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onNavigate) onNavigate(item.id);
+                }}
                 className={`btn p-0 d-flex align-items-center justify-content-center rounded-3 transition-all ${
                   isActive
                     ? "btn-primary text-white shadow"
