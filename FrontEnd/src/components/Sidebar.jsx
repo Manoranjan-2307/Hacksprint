@@ -169,6 +169,17 @@ export default function Sidebar({
                 (item.id === "officer" && currentUser?.role === "Officer") ||
                 (item.id === "heatmap" && currentUser?.role === "Admin")));
 
+          const handleNavClick = () => {
+            if (item.id === "citizen" && currentUser?.role !== "Citizen") {
+              if (onUserRoleChange) onUserRoleChange("Citizen");
+            } else if (item.id === "officer" && currentUser?.role !== "Officer") {
+              if (onUserRoleChange) onUserRoleChange("Officer");
+            } else if (["heatmap", "hotspots", "accountability", "settings"].includes(item.id) && currentUser?.role !== "Admin") {
+              if (onUserRoleChange) onUserRoleChange("Admin");
+            }
+            if (onNavigate) onNavigate(item.id);
+          };
+
           return (
             <div
               key={item.id}
@@ -177,7 +188,7 @@ export default function Sidebar({
               onMouseLeave={() => setHoveredItem(null)}
             >
               <button
-                onClick={() => onNavigate(item.id)}
+                onClick={handleNavClick}
                 className={`btn p-0 d-flex align-items-center justify-content-center rounded-3 transition-all ${
                   isActive
                     ? "btn-primary text-white shadow"

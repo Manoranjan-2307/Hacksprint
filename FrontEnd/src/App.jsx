@@ -9,6 +9,8 @@ import AdminDashboard from "./pages/Governance/AdminDashboard";
 import LoginPage from "./pages/LoginPage";
 import { INITIAL_TICKETS } from "./utils/mockData";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
 export default function App() {
   const [activeView, setActiveView] = useState("default");
   const [pipelineStep, setPipelineStep] = useState(1);
@@ -50,7 +52,7 @@ export default function App() {
   });
 
   useEffect(() => {
-    fetch("/api/geovision/tickets")
+    fetch(`${API_BASE_URL}/api/geovision/tickets`)
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error("API Offline");
@@ -96,7 +98,7 @@ export default function App() {
 
   const handleTicketCreated = (newTicket) => {
     setTickets((prev) => [newTicket, ...prev]);
-    fetch("/api/geovision/tickets", {
+    fetch(`${API_BASE_URL}/api/geovision/tickets`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTicket),
@@ -111,7 +113,7 @@ export default function App() {
           : t
       )
     );
-    fetch(`/api/geovision/tickets/${ticketId}/upvote`, { method: "POST" }).catch(() => {});
+    fetch(`${API_BASE_URL}/api/geovision/tickets/${ticketId}/upvote`, { method: "POST" }).catch(() => {});
   };
 
   const handleResolveTicket = (ticketId, resolveData) => {
