@@ -1,144 +1,101 @@
-# AskBIT — Intelligent Campus AI Assistant & RAG FAQ Portal 🎓⚡
+# Geo-Vision — Automated Infrastructure Grievance & Triage 🌐⚡
 
-> **An AI-Powered Campus Information Retrieval & Academic Assistance System for Bannari Amman Institute of Technology (BIT Sathy).**
+> **Domain:** Digital Governance & Public Welfare Platform  
+> **Location Focus:** Coimbatore, Tamil Nadu (Wards 1–100)  
+> **Tech Stack:** Computer Vision + Full-Stack Engineering (React 19, Vite, Node.js, Express)  
 
 ---
 
 ## 🌟 Overview
 
-**AskBIT** is an intelligent Retrieval-Augmented Generation (RAG) campus portal designed to streamline information access for Students, Parents, Faculty, and Administrators. Powered by a FAISS Vector Database, Sentence Transformer embeddings, and a responsive React 19 UI, AskBIT delivers instant, accurate answers to campus queries, academic regulations, examination schedules, hostel rules, and placement guidelines with verified source citations.
+**Geo-Vision** turns civic grievance reporting into a real-time, verifiable AI governance pipeline. Citizens snap a photo of an infrastructure issue (pothole, water leak, garbage dump, fallen tree, electrical hazard) instead of typing descriptions.
+
+Computer Vision (CV) automatically classifies the issue, validates EXIF GPS metadata, calculates visual damage severity, clusters duplicate nearby reports within a 100m radius into a single master ticket, auto-routes to municipal departments, and enforces a **Signature Resolution Verification Loop** to confirm repairs before closing tickets.
 
 ---
 
-## ✨ Key Features
-
-### 👨‍🎓 1. Student Assistant Hub
-- **AI-Powered Instant FAQ**: Ask questions regarding attendance rules, course registration, exam re-evaluation, and hostel curfews.
-- **Handbook Citations**: Every answer includes page-level citations from official academic handbooks and circulars.
-- **Query History & Feedback**: Track past AI interactions and provide accuracy ratings.
-
-### 👨‍👩‍👧 2. Parent Information Dashboard
-- **Linked Student Overview**: Monitor student academic updates, placement eligibility, and fee deadlines.
-- **Parent AI Queries**: Instant access to hostel rules, event On-Duty (OD) procedures, and official notices.
-
-### 👨‍🏫 3. Faculty Portal & Review Suite
-- **Low-Confidence Query Queue**: Review unanswered or low-confidence student queries forwarded by the AI engine.
-- **Draft & Publish FAQ**: Draft new Q&A pairs and submit them for instant inclusion into the knowledge base.
-- **Department Analytics**: Track query trends across AI & Data Science (AD), Information Technology (IT), and Computer Science (CSE).
-
-### 🛡️ 4. Admin Management Control Panel
-- **User Roster Control (`/admin2`)**: Create, edit, activate, or disable accounts for Students, Parents, and Faculty with custom Register IDs.
-- **RAG & Vector DB Settings (`/admin3_2`)**: Upload dataset CSV/PDF files, adjust similarity thresholds (default: 0.75), and re-index the FAISS Vector Engine.
-- **Roster Auto-Deduplication**: Built-in cache cleanup and 1-click **Reset Default Roster** utility.
-
-### 🔒 5. Security & Protected Routing
-- **Role-Based Access Control (RBAC)**: `<ProtectedRoute>` prevents unauthorized navigation between role dashboards.
-- **Dual Authentication**: Google Firebase SSO (`firebase/auth`) + MySQL DB / Static Role Authentication.
-
----
-
-## 🛠️ Technology Stack
-
-| Layer | Technology |
-| :--- | :--- |
-| **Frontend Framework** | React 19, Vite 6 |
-| **Routing & Auth Guard** | React Router v7 (`react-router-dom`) with `<ProtectedRoute>` |
-| **UI Components & Icons** | Material UI v6 (`@mui/material`), Bootstrap 5.3, Lucide React |
-| **State & Persistence** | React Hooks, Zustand (`zustand`), Browser `localStorage` |
-| **Backend Runtime** | Node.js v24, Express.js |
-| **Database** | MySQL 8.0 (`mysql2` pooling driver) |
-| **AI & Vector Search** | FAISS Vector DB, Sentence Transformers (`all-MiniLM-L6-v2`) |
-
----
-
-## 📁 Directory Structure
+## 🏗️ Project Architecture & Folder Structure
 
 ```text
-DC/
-├── BackEnd/
-│   ├── uploads/               # Uploaded circulars & handbooks
-│   ├── uploads_pdfs/          # PDF Knowledge Base datasets
-│   └── server.js              # Express API server & MySQL connection pool
-└── FrontEnd/
-    └── D_C/
-        ├── src/
-        │   ├── components/
-        │   │   ├── Sidebar/
-        │   │   │   ├── StudentSidebar.jsx
-        │   │   │   ├── AdminSidebar.jsx
-        │   │   │   ├── FacultySidebar.jsx
-        │   │   │   └── ParentSidebar.jsx
-        │   │   ├── Header.jsx
-        │   │   └── functionality.js
-        │   ├── pages/
-        │   │   ├── Admin/
-        │   │   │   ├── AdminDashboard.jsx
-        │   │   │   ├── AdminUserManagement.jsx
-        │   │   │   ├── AdminAnalytics.jsx
-        │   │   │   ├── AdminQueries.jsx
-        │   │   │   └── AdminRagSettings.jsx
-        │   │   ├── Student/
-        │   │   │   ├── StudentAssistant.jsx
-        │   │   │   ├── StudentHistory.jsx
-        │   │   │   ├── StudentFeedback.jsx
-        │   │   │   └── StudentProfile.jsx
-        │   │   ├── Faculty/
-        │   │   │   ├── FacultyDashboard.jsx
-        │   │   │   ├── FacultyAnalytics.jsx
-        │   │   │   ├── FacultyLowConfidence.jsx
-        │   │   │   └── FacultySubmitDraft.jsx
-        │   │   ├── Parent/
-        │   │   │   ├── ParentDashboard.jsx
-        │   │   │   ├── ParentHistory.jsx
-        │   │   │   ├── ParentFeedback.jsx
-        │   │   │   └── ParentProfile.jsx
-        │   │   ├── LoginPage.jsx
-        │   │   └── firebase.js
-        │   ├── App.jsx
-        │   └── index.css
-        └── package.json
+Hacksprint/
+├── FrontEnd/                   # React 19 Frontend Application
+│   ├── src/                    # React Source Code
+│   │   ├── assets/             # Brand assets & official logos
+│   │   ├── components/         # Reusable UI components
+│   │   │   ├── Header.jsx      # Top navigation header
+│   │   │   ├── Sidebar.jsx     # 72px compact icon sidebar with hover tooltips
+│   │   │   ├── PrototypeExplainer.jsx # Interactive 5-step pipeline header banner
+│   │   │   ├── InteractiveMap.jsx  # Canvas geo-spatial map & density heatmaps
+│   │   │   ├── GradCamViewer.jsx   # Explainable AI (XAI) Grad-CAM heatmap viewer
+│   │   │   └── BeforeAfterVerifier.jsx # Side-by-side Before/After verification tool
+│   │   ├── pages/              # Portal views by role
+│   │   │   ├── Citizen/CitizenDashboard.jsx  # Citizen photo filing & EXIF guard
+│   │   │   ├── Officer/OfficerDashboard.jsx  # Field officer dispatch & resolution loop
+│   │   │   ├── Governance/AdminDashboard.jsx # Command center, hotspots & leaderboard
+│   │   │   └── LoginPage.jsx   # Portal role selector
+│   │   ├── utils/              # Core logic & algorithms
+│   │   │   ├── cvEngine.js     # CV classifier, depth scorer & perceptual hash
+│   │   │   └── mockData.js     # Pre-populated Coimbatore initial dataset
+│   │   ├── App.jsx             # App router & global state
+│   │   ├── index.css           # Global typography & styles
+│   │   └── main.jsx            # Application entry point
+│   ├── public/                 # Static assets & favicon
+│   ├── index.html              # HTML entry point with Google Fonts & favicon
+│   ├── vite.config.js          # Vite bundler configuration
+│   ├── vercel.json             # Vercel deployment configuration
+│   └── package.json            # Frontend dependencies
+├── BackEnd/                    # Express.js REST API Server
+│   ├── server.js               # REST API routes & Geo-Vision engine endpoints
+│   ├── db.js                   # MySQL database connector module
+│   ├── uploads/                # EXIF photo upload storage directory
+│   └── package.json            # Backend dependencies
+└── README.md                   # Project documentation & deployment guide
 ```
 
 ---
 
-## 🔑 Default Login Credentials
+## 🚀 Development & Build Setup
 
-| Role | Username / Identifier | Password | Default Route |
-| :--- | :--- | :--- | :--- |
-| **Student (Rahul K)** | `7376242AD267` or `rahul` | `pass` | `/student1_1` |
-| **Student (Sanjiv)** | `7376242AD292` or `sanjiv` | `pass` | `/student1_1` |
-| **Student (Sujan)** | `7376242IT314` or `sujan` | `pass` | `/student1_1` |
-| **Parent (Kanagaraj)** | `kanagaraj` or `parent` | `pass` | `/parent/dashboard` |
-| **Faculty (Dr. Arun)** | `FAC001` or `arunkumar` | `pass` | `/faculty/dashboard` |
-| **Admin (System Admin)**| `ADM001` or `admin` | `@min` | `/admin1` |
-
----
-
-## 🚀 Quick Setup & Installation
-
-### 1. Prerequisites
-- Node.js (v18+)
-- MySQL Server (v8.0+)
-- npm or yarn
-
-### 2. Frontend Setup
+### 1. Install Dependencies & Run Frontend
 ```bash
-cd FrontEnd/D_C
+cd FrontEnd
 npm install
 npm run dev
 ```
-Access the application at `http://localhost:5173`.
+Runs the Vite development server on `http://localhost:5173`.
 
-### 3. Backend Setup
+### 2. Install Dependencies & Run Backend Server
 ```bash
 cd BackEnd
 npm install
-node server.js
+npm start
 ```
-The Express backend server runs on `http://localhost:5000`.
+Runs the Express REST API server on `http://localhost:5000`.
+
+### 3. Production Build
+```bash
+cd FrontEnd
+npm run build
+```
+Generates production build in `FrontEnd/dist/`.
 
 ---
 
-## 📜 License & Acknowledgments
+## ☁️ Deployment Guide
 
-Developed for the **HACKORBIT** hackathon project submission.
+### Deploying Frontend to Vercel / Netlify
+1. Root Directory: `FrontEnd`
+2. Build Command: `npm run build`
+3. Output Directory: `dist`
+4. Node Version: `18.x` or higher
+
+### Deploying Backend to Render / Railway
+1. Root Directory: `BackEnd`
+2. Build Command: `npm install`
+3. Start Command: `node server.js`
+4. Environment Variable: `PORT=5000`
+
+---
+
+## 📄 License
+Licensed under the MIT License.

@@ -754,7 +754,181 @@ app.post("/api/student-pdfs", uploadPDF.single("pdf"), (req, res) => {
 });
 
 
+
+// ==========================================
+// GEO-VISION DIGITAL GOVERNANCE REST ENDPOINTS
+// ==========================================
+
+const INITIAL_GEO_TICKETS = [
+  {
+    id: "GV-CBE-8801",
+    title: "Deep Road Cave-in / Pothole",
+    category: "POTHOLE",
+    categoryLabel: "Pothole & Road Damage",
+    department: "Coimbatore Roads & Infrastructure Dept",
+    severityScore: 92,
+    severityLabel: "Critical",
+    confidence: 0.96,
+    estimatedDepthCm: 18,
+    estimatedAreaSqM: 3.2,
+    status: "Pending",
+    citizenImpactCount: 6,
+    reportedAt: "2026-08-20T08:15:00Z",
+    citizenName: "Karthik R. (Gandhipuram)",
+    citizenPhone: "+91 9876543210",
+    location: {
+      lat: 11.0168,
+      lng: 76.9558,
+      address: "Cross Cut Road Signal, Gandhipuram Zone 2 (Central), Coimbatore",
+      ward: "Ward 42",
+    },
+    beforeImage: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600&auto=format&fit=crop&q=80",
+    imageHash: "a1b2c3d4e5f67890",
+    gradCamData: {
+      centerX: 48,
+      centerY: 52,
+      radius: 28,
+      intensity: 0.94,
+      hotspots: [{ x: 48, y: 52, val: 0.95 }, { x: 55, y: 58, val: 0.88 }],
+      layerName: "ConvLayer_4_ResNet",
+    },
+    history: [
+      { timestamp: "2026-08-20T08:15:00Z", action: "Report Submitted", actor: "Citizen (Karthik R.)" },
+      { timestamp: "2026-08-20T08:15:02Z", action: "CV Classification & Severity Score (92/100 Critical)", actor: "Geo-Vision CV Engine" },
+      { timestamp: "2026-08-20T08:15:03Z", action: "Geo-Routed to Coimbatore Roads & Infrastructure Dept", actor: "Geo-Routing Engine" },
+    ],
+  },
+  {
+    id: "GV-CBE-8802",
+    title: "Major Water Pipeline Burst",
+    category: "WATER_LEAK",
+    categoryLabel: "Water Pipeline Leakage / Pipe Burst",
+    department: "Coimbatore City Metro Water Board",
+    severityScore: 88,
+    severityLabel: "Critical",
+    confidence: 0.98,
+    estimatedDepthCm: null,
+    estimatedAreaSqM: 8.5,
+    status: "In Progress",
+    assignedOfficer: "Officer Subramaniam V. (ID: CBE-W-402)",
+    citizenImpactCount: 11,
+    reportedAt: "2026-08-20T06:30:00Z",
+    citizenName: "Priya S. (Peelamedu)",
+    citizenPhone: "+91 9840123456",
+    location: {
+      lat: 11.0285,
+      lng: 76.9950,
+      address: "Avinashi Road, Near PSG Tech, Peelamedu Zone 3, Coimbatore",
+      ward: "Ward 38",
+    },
+    beforeImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&auto=format&fit=crop&q=80",
+    imageHash: "f9e8d7c6b5a43210",
+    gradCamData: {
+      centerX: 42,
+      centerY: 45,
+      radius: 32,
+      intensity: 0.91,
+      hotspots: [{ x: 42, y: 45, val: 0.98 }],
+      layerName: "ConvLayer_4_ResNet",
+    },
+    history: [
+      { timestamp: "2026-08-20T06:30:00Z", action: "Report Submitted", actor: "Citizen (Priya S.)" },
+      { timestamp: "2026-08-20T07:05:00Z", action: "Assigned to Officer Subramaniam V.", actor: "Dept Dispatch" },
+    ],
+  },
+];
+
+let memoryGeoTickets = [...INITIAL_GEO_TICKETS];
+
+app.get("/api/geovision/health", (req, res) => {
+  res.json({ status: "ok", app: "Geo-Vision", version: "2.0.0", activeTickets: memoryGeoTickets.length });
+});
+
+app.get("/api/geovision/tickets", (req, res) => {
+  const { category, status, department, search } = req.query;
+  let filtered = [...memoryGeoTickets];
+
+  if (category) filtered = filtered.filter(t => t.category === category);
+  if (status) filtered = filtered.filter(t => t.status === status);
+  if (department) filtered = filtered.filter(t => t.department === department);
+  if (search) {
+    const q = search.toLowerCase();
+    filtered = filtered.filter(t => 
+      t.title.toLowerCase().includes(q) || 
+      t.id.toLowerCase().includes(q) || 
+      t.location.address.toLowerCase().includes(q)
+    );
+  }
+
+  // Priority ranking: Critical severity first, then reportedAt
+  filtered.sort((a, b) => b.severityScore - a.severityScore);
+  res.json(filtered);
+});
+
+app.get("/api/geovision/tickets/:id", (req, res) => {
+  const ticket = memoryGeoTickets.find(t => t.id === req.params.id);
+  if (!ticket) return res.status(404).json({ message: "Ticket not found" });
+  res.json(ticket);
+});
+
+app.post("/api/geovision/tickets", (req, res) => {
+  const newTicket = req.body;
+  if (!newTicket.id) {
+    newTicket.id = `GV-2026-${Math.floor(8800 + Math.random() * 1000)}`;
+  }
+  if (!newTicket.reportedAt) {
+    newTicket.reportedAt = new Date().toISOString();
+  }
+  memoryGeoTickets.unshift(newTicket);
+  res.status(201).json({ message: "Ticket created successfully", ticket: newTicket });
+});
+
+app.post("/api/geovision/tickets/:id/resolve", (req, res) => {
+  const { id } = req.params;
+  const { afterImage, verification } = req.body;
+  const ticket = memoryGeoTickets.find(t => t.id === id);
+
+  if (!ticket) return res.status(404).json({ message: "Ticket not found" });
+
+  ticket.afterImage = afterImage;
+  ticket.resolutionVerification = verification;
+
+  if (verification && verification.verified) {
+    ticket.status = "Resolved";
+    ticket.resolvedAt = new Date().toISOString();
+    ticket.history.push({
+      timestamp: new Date().toISOString(),
+      action: `CV Resolution Verified (${verification.visualMatchPercent || 90}% Match)`,
+      actor: "Geo-Vision CV Verification Loop",
+    });
+  } else {
+    ticket.status = "Reopened_Audit";
+    ticket.history.push({
+      timestamp: new Date().toISOString(),
+      action: `Resolution Verification Failed: Re-opened for Audit Review`,
+      actor: "Geo-Vision CV Verification Loop",
+    });
+  }
+
+  res.json({ message: "Ticket updated with resolution verification", ticket });
+});
+
+app.post("/api/geovision/tickets/:id/upvote", (req, res) => {
+  const ticket = memoryGeoTickets.find(t => t.id === req.params.id);
+  if (!ticket) return res.status(404).json({ message: "Ticket not found" });
+
+  ticket.citizenImpactCount = (ticket.citizenImpactCount || 1) + 1;
+  ticket.history.push({
+    timestamp: new Date().toISOString(),
+    action: `Citizen Upvoted Issue (Impact Count: ${ticket.citizenImpactCount})`,
+    actor: "Citizen Portal",
+  });
+
+  res.json({ message: "Ticket upvoted", ticket });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
