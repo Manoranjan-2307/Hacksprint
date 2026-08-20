@@ -51,16 +51,30 @@ export default function App() {
     return INITIAL_TICKETS;
   });
 
+  const [isBackendConnected, setIsBackendConnected] = useState(false);
+
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/geovision/tickets`)
-      .then((res) => {
-        if (res.ok) return res.json();
-        throw new Error("API Offline");
-      })
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) setTickets(data);
-      })
-      .catch(() => {});
+    let intervalId;
+    const fetchLiveTickets = () => {
+      fetch(`${API_BASE_URL}/api/geovision/tickets`)
+        .then((res) => {
+          if (res.ok) return res.json();
+          throw new Error("API Offline");
+        })
+        .then((data) => {
+          if (Array.isArray(data) && data.length > 0) {
+            setTickets(data);
+            setIsBackendConnected(true);
+          }
+        })
+        .catch(() => {
+          setIsBackendConnected(false);
+        });
+    };
+
+    fetchLiveTickets();
+    intervalId = setInterval(fetchLiveTickets, 5000);
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
