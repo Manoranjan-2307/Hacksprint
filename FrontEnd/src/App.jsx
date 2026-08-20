@@ -166,6 +166,40 @@ export default function App() {
 
   const currentRole = currentUser?.role || "Citizen";
 
+  const renderCurrentView = () => {
+    if (activeView === "citizen") {
+      return (
+        <CitizenDashboard
+          tickets={tickets}
+          onTicketCreated={handleTicketCreated}
+          onTicketUpvoted={handleTicketUpvoted}
+        />
+      );
+    }
+
+    if (activeView === "officer") {
+      return <OfficerDashboard tickets={tickets} onResolveTicket={handleResolveTicket} />;
+    }
+
+    if (["heatmap", "hotspots", "accountability", "settings"].includes(activeView)) {
+      return <AdminDashboard key={activeView} tickets={tickets} initialTab={activeView} />;
+    }
+
+    if (currentRole === "Officer") {
+      return <OfficerDashboard tickets={tickets} onResolveTicket={handleResolveTicket} />;
+    } else if (currentRole === "Admin") {
+      return <AdminDashboard key="admin-default" tickets={tickets} initialTab="heatmap" />;
+    } else {
+      return (
+        <CitizenDashboard
+          tickets={tickets}
+          onTicketCreated={handleTicketCreated}
+          onTicketUpvoted={handleTicketUpvoted}
+        />
+      );
+    }
+  };
+
   return (
     <Router>
       <div className="d-flex min-vh-100 bg-light" style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}>
@@ -193,19 +227,7 @@ export default function App() {
 
               <Route
                 path="*"
-                element={
-                  activeView === "citizen" || (activeView === "default" && currentRole === "Citizen") ? (
-                    <CitizenDashboard
-                      tickets={tickets}
-                      onTicketCreated={handleTicketCreated}
-                      onTicketUpvoted={handleTicketUpvoted}
-                    />
-                  ) : activeView === "officer" || (activeView === "default" && currentRole === "Officer") ? (
-                    <OfficerDashboard tickets={tickets} onResolveTicket={handleResolveTicket} />
-                  ) : (
-                    <AdminDashboard tickets={tickets} initialTab={activeView !== "default" ? activeView : "heatmap"} />
-                  )
-                }
+                element={renderCurrentView()}
               />
             </Routes>
           </main>
