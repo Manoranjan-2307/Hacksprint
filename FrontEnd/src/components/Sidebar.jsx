@@ -170,14 +170,16 @@ export default function Sidebar({
                 (item.id === "heatmap" && currentUser?.role === "Admin")));
 
           const handleNavClick = () => {
-            if (item.id === "citizen" && currentUser?.role !== "Citizen") {
-              if (onUserRoleChange) onUserRoleChange("Citizen");
-            } else if (item.id === "officer" && currentUser?.role !== "Officer") {
-              if (onUserRoleChange) onUserRoleChange("Officer");
-            } else if (["heatmap", "hotspots", "accountability", "settings"].includes(item.id) && currentUser?.role !== "Admin") {
-              if (onUserRoleChange) onUserRoleChange("Admin");
+            let targetRole = currentUser?.role;
+            if (item.id === "citizen") targetRole = "Citizen";
+            else if (item.id === "officer") targetRole = "Officer";
+            else if (["heatmap", "hotspots", "accountability", "settings"].includes(item.id)) targetRole = "Admin";
+
+            if (targetRole !== currentUser?.role) {
+              if (onUserRoleChange) onUserRoleChange(targetRole, item.id);
+            } else {
+              if (onNavigate) onNavigate(item.id);
             }
-            if (onNavigate) onNavigate(item.id);
           };
 
           return (

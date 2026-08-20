@@ -83,7 +83,7 @@ export default function App() {
     } catch (e) {}
   }, [tickets]);
 
-  const handleUserRoleChange = (newRole) => {
+  const handleUserRoleChange = (newRole, targetView = null) => {
     const updatedUser = {
       ...currentUser,
       role: newRole,
@@ -95,7 +95,11 @@ export default function App() {
           : "Coimbatore Municipal Director",
     };
     setCurrentUser(updatedUser);
-    setActiveView("default");
+    if (targetView) {
+      setActiveView(targetView);
+    } else {
+      setActiveView("default");
+    }
     localStorage.setItem("geovision_user", JSON.stringify(updatedUser));
   };
 
