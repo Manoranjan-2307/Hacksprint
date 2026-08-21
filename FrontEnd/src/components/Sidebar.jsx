@@ -74,10 +74,12 @@ export default function Sidebar({
 
   return (
     <aside
-      className="bg-slate-900 text-white border-end border-secondary flex-shrink-0 d-flex flex-column align-items-center py-3 position-relative z-3 shadow"
+      className="bg-slate-900 text-white border-end border-secondary flex-shrink-0 d-flex flex-column align-items-center py-3 sticky-top z-3 shadow"
       style={{
         width: "72px",
-        minHeight: "100vh",
+        height: "100vh",
+        position: "sticky",
+        top: 0,
         backgroundColor: "#0f172a",
       }}
     >
