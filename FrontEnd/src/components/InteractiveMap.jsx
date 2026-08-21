@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { MapPin, Navigation, Layers, AlertCircle, Sparkles, Filter, CheckCircle2 } from "lucide-react";
+import { MapPin, Navigation, Layers, AlertCircle, Flame, Filter, CheckCircle2 } from "lucide-react";
 import { CATEGORIES } from "../utils/cvEngine";
 
 /**
@@ -259,7 +259,7 @@ export default function InteractiveMap({
               showHotspots ? "btn-danger fw-bold" : "btn-outline-secondary text-white"
             }`}
           >
-            <Sparkles size={13} /> Hotspots
+            <Flame size={13} /> Hotspots
           </button>
         </div>
       </div>

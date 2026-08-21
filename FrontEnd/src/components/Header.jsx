@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldCheck, Eye, MapPin, User, LogOut, Wifi, WifiOff, ChevronDown, Award } from "lucide-react";
+import { ShieldCheck, Scan, MapPin, User, LogOut, Wifi, WifiOff, ChevronDown, Award } from "lucide-react";
 
 export default function Header({
   currentUser,
@@ -15,7 +15,7 @@ export default function Header({
         <div className="navbar-brand d-flex align-items-center m-0 cursor-pointer">
           <div className="bg-primary bg-gradient p-2 rounded-3 text-white d-flex align-items-center justify-content-center shadow-sm flex-shrink-0"
                style={{ width: 42, height: 42, background: "linear-gradient(135deg, #0284c7, #0f172a)" }}>
-            <Eye size={24} className="text-cyan" />
+            <Scan size={24} className="text-cyan" />
           </div>
           <div className="d-flex flex-column justify-content-center ms-3">
             <div className="fw-bold fs-5 text-white lh-sm mb-1">

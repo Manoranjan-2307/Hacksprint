@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import {
-  Eye,
+  Scan,
   Camera,
   ShieldCheck,
   Map,
-  Sparkles,
+  Flame,
   Award,
   Settings,
   User,
@@ -50,7 +50,7 @@ export default function Sidebar({
       id: "hotspots",
       label: "Hotspot Prediction Engine",
       shortLabel: "Hotspots",
-      icon: Sparkles,
+      icon: Flame,
       badge: "Predict",
       roleNeeded: "Admin",
     },
@@ -81,7 +81,7 @@ export default function Sidebar({
         backgroundColor: "#0f172a",
       }}
     >
-      {/* Brand Eye Logo Icon */}
+      {/* Brand Scan Logo Icon */}
       <div className="mb-4 text-center">
         <div
           onClick={() => onNavigate("citizen")}
@@ -93,7 +93,7 @@ export default function Sidebar({
           }}
           title="Geo-Vision — Coimbatore Digital Governance"
         >
-          <Eye size={26} className="text-cyan" />
+          <Scan size={26} className="text-cyan" />
         </div>
         <span
           className="badge bg-cyan text-dark fw-bold mt-1.5"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ShieldCheck, Award, Map, Sparkles, AlertTriangle, TrendingUp, CheckCircle2, Clock, Cpu, Users, Settings, RefreshCw, BarChart2 } from "lucide-react";
+import { ShieldCheck, Award, Map, Flame, AlertTriangle, TrendingUp, CheckCircle2, Clock, Cpu, Users, Settings, RefreshCw, BarChart2 } from "lucide-react";
 import InteractiveMap from "../../components/InteractiveMap";
 import { HOTSPOT_PREDICTIONS, ACCOUNTABILITY_LEADERBOARD } from "../../utils/mockData";
 
@@ -51,7 +51,7 @@ export default function AdminDashboard({ tickets = [], initialTab = "heatmap" })
               activeTab === "hotspots" ? "btn-primary text-white shadow-sm" : "btn-light text-dark border-0"
             }`}
           >
-            <Sparkles size={16} /> Hotspot Predictions
+            <Flame size={16} /> Hotspot Predictions
           </button>
           <button
             onClick={() => setActiveTab("accountability")}
@@ -121,7 +121,7 @@ export default function AdminDashboard({ tickets = [], initialTab = "heatmap" })
             </div>
             <h2 className="fw-bold mb-1 text-white">{auditFlagsCount}</h2>
             <small className="text-white-50 d-block" style={{ fontSize: "11.5px" }}>
-              Auto-reopened on verification failure
+              Requires Secondary Officer Field Review
             </small>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default function AdminDashboard({ tickets = [], initialTab = "heatmap" })
               <div className="card-header bg-slate-900 text-white py-3 px-4 d-flex justify-content-between align-items-center"
                    style={{ backgroundColor: "#0f172a" }}>
                 <div className="d-flex align-items-center gap-2">
-                  <Sparkles className="text-warning" size={20} />
+                  <Flame className="text-warning" size={20} />
                   <h6 className="fw-bold mb-0">Hotspot Prediction Engine — Coimbatore Zones</h6>
                 </div>
                 <span className="badge bg-danger">Proactive Maintenance</span>
