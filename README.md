@@ -1,70 +1,70 @@
-# Geo-Vision — Automated Infrastructure Grievance & Triage 🌐⚡
+# Geo-Vision Mobile — AI-Powered Mobile Infrastructure Grievance App 📱⚡
 
-> **Domain:** Digital Governance & Public Welfare Platform  
-> **Location Focus:** Coimbatore, Tamil Nadu (Wards 1–100)  
-> **Tech Stack:** Computer Vision + Full-Stack Engineering (React 19, Vite, Node.js, Express)  
+> **Domain:** Mobile Digital Governance & Public Welfare Application  
+> **Location Focus:** Coimbatore Municipal Corporation, Tamil Nadu (Wards 1–100)  
+> **Tech Stack:** React Native / Expo Mobile Frontend + Computer Vision Cloud API (YOLOv8, Node.js, Express)  
 
 ---
 
 ## 🌟 Overview
 
-**Geo-Vision** turns civic grievance reporting into a real-time, verifiable AI governance pipeline. Citizens snap a photo of an infrastructure issue (pothole, water leak, garbage dump, fallen tree, electrical hazard) instead of typing descriptions.
+**Geo-Vision Mobile** is a zero-form, mobile-first civic governance application. Citizens open the mobile app and tap a single camera button to snap an infrastructure issue (potholes, water leaks, garbage dumps, fallen trees, electrical hazards) instead of typing manual descriptions on small smartphone screens.
 
-Computer Vision (CV) automatically classifies the issue, validates EXIF GPS metadata, calculates visual damage severity, clusters duplicate nearby reports within a 100m radius into a single master ticket, auto-routes to municipal departments, and enforces a **Signature Resolution Verification Loop** to confirm repairs before closing tickets.
+Cloud Computer Vision (CV) automatically classifies the issue in <10ms, validates native camera EXIF GPS metadata, calculates visual damage severity (0–100), clusters duplicate nearby reports within a 100m radius into a single master ticket, dispatches to the assigned Coimbatore Ward Officer's mobile app, and enforces a **Signature Before/After Resolution Verification Loop** before closing tickets.
 
 ---
 
-## 🏗️ Project Architecture & Folder Structure
+## 🏗️ Mobile App Architecture & Folder Structure
 
 ```text
 Hacksprint/
-├── FrontEnd/                   # React 19 Frontend Application
-│   ├── src/                    # React Source Code
-│   │   ├── assets/             # Brand assets & official logos
-│   │   ├── components/         # Reusable UI components
-│   │   │   ├── Header.jsx      # Top navigation header
-│   │   │   ├── Sidebar.jsx     # 72px compact icon sidebar with hover tooltips
-│   │   │   ├── PrototypeExplainer.jsx # Interactive 5-step pipeline header banner
-│   │   │   ├── InteractiveMap.jsx  # Canvas geo-spatial map & density heatmaps
-│   │   │   ├── GradCamViewer.jsx   # Explainable AI (XAI) Grad-CAM heatmap viewer
-│   │   │   └── BeforeAfterVerifier.jsx # Side-by-side Before/After verification tool
-│   │   ├── pages/              # Portal views by role
-│   │   │   ├── Citizen/CitizenDashboard.jsx  # Citizen photo filing & EXIF guard
-│   │   │   ├── Officer/OfficerDashboard.jsx  # Field officer dispatch & resolution loop
-│   │   │   ├── Governance/AdminDashboard.jsx # Command center, hotspots & leaderboard
-│   │   │   └── LoginPage.jsx   # Portal role selector
-│   │   ├── utils/              # Core logic & algorithms
+├── FrontEnd/                   # React 19 Mobile Application Prototype
+│   ├── src/                    # Mobile App Source Code
+│   │   ├── assets/             # Mobile brand assets & official logos
+│   │   ├── components/         # Mobile UI components
+│   │   │   ├── Header.jsx      # Mobile app header & status bar
+│   │   │   ├── Sidebar.jsx     # Compact touch navigation drawer
+│   │   │   ├── PrototypeExplainer.jsx # 5-step mobile pipeline banner
+│   │   │   ├── InteractiveMap.jsx  # Touch canvas geo-spatial map & density heatmaps
+│   │   │   ├── GradCamViewer.jsx   # Mobile Explainable AI (XAI) Grad-CAM heatmap viewer
+│   │   │   └── BeforeAfterVerifier.jsx # Mobile side-by-side Before/After verification tool
+│   │   ├── pages/              # Mobile App Views by Role
+│   │   │   ├── Citizen/CitizenDashboard.jsx  # Mobile camera snap & EXIF guard
+│   │   │   ├── Officer/OfficerDashboard.jsx  # Mobile officer dispatch & resolution loop
+│   │   │   ├── Governance/AdminDashboard.jsx # Mobile command center, hotspots & leaderboard
+│   │   │   └── LoginPage.jsx   # Mobile role switcher
+│   │   ├── utils/              # Core mobile logic & algorithms
 │   │   │   ├── cvEngine.js     # CV classifier, depth scorer & perceptual hash
 │   │   │   └── mockData.js     # Pre-populated Coimbatore initial dataset
-│   │   ├── App.jsx             # App router & global state
-│   │   ├── index.css           # Global typography & styles
-│   │   └── main.jsx            # Application entry point
-│   ├── public/                 # Static assets & favicon
-│   ├── index.html              # HTML entry point with Google Fonts & favicon
+│   │   ├── App.jsx             # Mobile App router & state
+│   │   ├── index.css           # Mobile typography & styles
+│   │   └── main.jsx            # Mobile entry point
+│   ├── public/                 # Mobile static assets & favicon
+│   ├── index.html              # Mobile HTML entry point
 │   ├── vite.config.js          # Vite bundler configuration
 │   ├── vercel.json             # Vercel deployment configuration
-│   └── package.json            # Frontend dependencies
-├── BackEnd/                    # Express.js REST API Server
+│   └── package.json            # Mobile app dependencies
+├── BackEnd/                    # Cloud AI REST API Server
 │   ├── server.js               # REST API routes & Geo-Vision engine endpoints
 │   ├── db.js                   # MySQL database connector module
 │   ├── uploads/                # EXIF photo upload storage directory
 │   └── package.json            # Backend dependencies
-└── README.md                   # Project documentation & deployment guide
+└── README.md                   # Mobile App documentation & deployment guide
 ```
 
 ---
 
 ## 🚀 Development & Build Setup
 
-### 1. Install Dependencies & Run Frontend
+### 1. Install Dependencies & Run Mobile App Prototype
 ```bash
 cd FrontEnd
 npm install
 npm run dev
 ```
-Runs the Vite development server on `http://localhost:5173`.
+Runs the Vite mobile dev server on `http://localhost:5173`.
 
-### 2. Install Dependencies & Run Backend Server
+### 2. Install Dependencies & Run Backend API Server
 ```bash
 cd BackEnd
 npm install
@@ -77,19 +77,18 @@ Runs the Express REST API server on `http://localhost:5000`.
 cd FrontEnd
 npm run build
 ```
-Generates production build in `FrontEnd/dist/`.
+Generates production mobile build in `FrontEnd/dist/`.
 
 ---
 
 ## ☁️ Deployment Guide
 
-### Deploying Frontend to Vercel / Netlify
+### Deploying Mobile App Frontend (Vercel)
 1. Root Directory: `FrontEnd`
 2. Build Command: `npm run build`
 3. Output Directory: `dist`
-4. Node Version: `18.x` or higher
 
-### Deploying Backend to Render / Railway
+### Deploying Cloud API Server (Render)
 1. Root Directory: `BackEnd`
 2. Build Command: `npm install`
 3. Start Command: `node server.js`

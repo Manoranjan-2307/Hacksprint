@@ -19,10 +19,10 @@ export default function Header({
           </div>
           <div className="d-flex flex-column justify-content-center ms-3">
             <div className="fw-bold fs-5 text-white lh-sm mb-1">
-              Geo-Vision
+              Geo-Vision Mobile
             </div>
             <small className="text-white-50 d-block" style={{ fontSize: "11.5px" }}>
-              Automated Infrastructure Grievance & Triage
+              AI-Powered Mobile Infrastructure Grievance App
             </small>
           </div>
         </div>
@@ -32,12 +32,12 @@ export default function Header({
           {/* Offline Sync Status Badge */}
           {isOffline ? (
             <span className="badge bg-danger bg-opacity-20 text-danger border border-danger d-flex align-items-center gap-1 px-3 py-2">
-              <WifiOff size={14} /> Offline Mode ({offlineQueueCount} queued)
+              <WifiOff size={14} /> Mobile Offline ({offlineQueueCount} queued)
             </span>
           ) : (
             <span className="badge bg-success bg-opacity-10 text-success border border-success d-flex align-items-center gap-1 px-2 py-1"
                   style={{ fontSize: "11px" }}>
-              <Wifi size={12} /> Live Sync Active
+              <Wifi size={12} /> Mobile Live Sync Active
             </span>
           )}
 
